@@ -137,9 +137,17 @@ a {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.02em;
+}
+
+.logo-icon {
+  height: 1.5rem;
+  width: auto;
 }
 
 .logo-mark {
