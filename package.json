@@ -1,5 +1,5 @@
 {
-  "name": "tshell.aathma.io",
+  "name": "lumaterm.aathma.io",
   "version": "1.0.0",
   "devDependencies": {
     "@types/bun": "latest",
