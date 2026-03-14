@@ -3,6 +3,7 @@ import { initMoon } from "./moon";
 import { initSpace } from "./space";
 import { initLightbox } from "./lightbox";
 import { initCursor } from "./cursor";
+import { initGrid } from "./grid";
 
 document.addEventListener("DOMContentLoaded", () => {
   initReleases();
@@ -10,4 +11,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initSpace();
   initLightbox();
   initCursor();
+  initGrid();
 });
