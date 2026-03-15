@@ -242,6 +242,10 @@
       <div id="downloads-grid" class="downloads-grid">
         <p class="no-assets">Loading releases...</p>
       </div>
+      <div class="macos-notice" id="macos-notice">
+        <p><strong>macOS users:</strong> If you see <em>"App is damaged and can't be opened"</em>, run the following command in Terminal to remove the quarantine attribute:</p>
+        <code>xattr -cr /Applications/lumaterm.app</code>
+      </div>
     </div>
   </section>
 
@@ -271,6 +275,24 @@
       LumaTerm is provided "as is", without warranty of any kind. The authors are not liable for any damages or claims arising from the use of this software. By downloading or using LumaTerm, you agree to the terms of the <a href="https://github.com/aathma-dev/lumaterm/blob/main/LICENSE" target="_blank">MIT License</a>.
     </div>
   </footer>
+
+  <!-- macOS quarantine notice modal -->
+  <div id="macos-modal" class="macos-modal" hidden>
+    <div class="macos-modal-backdrop" onclick="document.getElementById('macos-modal').hidden=true"></div>
+    <div class="macos-modal-content">
+      <div class="macos-modal-icon">
+        <svg width="24" height="24" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="4.5" r="0.75" fill="currentColor"/></svg>
+      </div>
+      <h3>macOS Installation Note</h3>
+      <p>Your download has started. Since LumaTerm is not signed with an Apple Developer certificate, macOS may show <em>"App is damaged and can't be opened"</em>.</p>
+      <p>To fix this, run the following command in Terminal:</p>
+      <div class="macos-modal-code">
+        <code>xattr -cr /Applications/lumaterm.app</code>
+        <button class="macos-modal-copy" onclick="navigator.clipboard.writeText('xattr -cr /Applications/lumaterm.app');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>
+      </div>
+      <button class="macos-modal-close" onclick="document.getElementById('macos-modal').hidden=true">Got it</button>
+    </div>
+  </div>
 
 </body>
 </html>

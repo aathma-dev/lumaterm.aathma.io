@@ -55,7 +55,7 @@ function classifyAssets(assets: Asset[]): PlatformDownloads {
       size: formatSize(asset.size),
     };
 
-    if (name.endsWith(".dmg") && name.includes("arm")) {
+    if (name.endsWith(".dmg") && (name.includes("aarch64") || name.includes("arm"))) {
       downloads.macosArm = entry;
     } else if (name.endsWith(".dmg") || (name.includes("macos") && name.endsWith(".zip"))) {
       downloads.macos = entry;
@@ -92,6 +92,18 @@ function platformLabel(platform: string): string {
   }
 }
 
+function showMacosModal() {
+  const modal = document.getElementById("macos-modal");
+  if (modal) modal.hidden = false;
+}
+
+function attachMacosModalHandler(el: HTMLElement) {
+  el.addEventListener("click", () => {
+    // Allow the download to proceed, then show modal
+    setTimeout(showMacosModal, 300);
+  });
+}
+
 function renderDownloadButton(release: Release, downloads: PlatformDownloads) {
   const platform = detectPlatform();
   const primary = getPrimaryDownload(downloads, platform);
@@ -99,7 +111,27 @@ function renderDownloadButton(release: Release, downloads: PlatformDownloads) {
   // Update all primary download buttons
   const buttons = document.querySelectorAll<HTMLAnchorElement>("[data-download='primary']");
   buttons.forEach((btn) => {
-    if (primary) {
+    if (platform === "macos" && downloads.macosArm && downloads.macos) {
+      const infoIcon = `<a href="#macos-notice" class="macos-info-icon" title="macOS installation note">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="4.5" r="0.75" fill="currentColor"/></svg>
+      </a>`;
+      // Show both Apple Silicon and Intel options
+      btn.href = downloads.macosArm.url;
+      btn.innerHTML = `Download for macOS (Apple Silicon) <span class="btn-hint">${release.tag_name} · ${downloads.macosArm.size}</span>`;
+      attachMacosModalHandler(btn);
+      // Add Intel button and info icon if not already present
+      if (!btn.parentElement?.querySelector("[data-download='macos-intel']")) {
+        const intelBtn = document.createElement("a");
+        intelBtn.href = downloads.macos.url;
+        intelBtn.className = "btn-primary btn-secondary-download";
+        intelBtn.setAttribute("data-download", "macos-intel");
+        intelBtn.innerHTML = `Download for macOS (Intel) <span class="btn-hint">${release.tag_name} · ${downloads.macos.size}</span>`;
+        btn.parentElement?.insertBefore(intelBtn, btn.nextSibling);
+        attachMacosModalHandler(intelBtn);
+        // Add info icon after Intel button
+        intelBtn.insertAdjacentHTML("afterend", infoIcon);
+      }
+    } else if (primary) {
       btn.href = primary.url;
       btn.innerHTML = `Download for ${platformLabel(platform)} <span class="btn-hint">${release.tag_name} · ${primary.size}</span>`;
     } else {
@@ -168,6 +200,15 @@ function renderAllDownloads(downloads: PlatformDownloads, version: string) {
   `;
     })
     .join("");
+
+  // Attach modal to macOS download cards in the grid
+  if (detectPlatform() === "macos") {
+    grid.querySelectorAll<HTMLAnchorElement>(".download-card").forEach((card) => {
+      if (card.querySelector(".download-label")?.textContent?.startsWith("macOS")) {
+        attachMacosModalHandler(card);
+      }
+    });
+  }
 }
 
 function renderVersionPicker(releases: Release[]) {

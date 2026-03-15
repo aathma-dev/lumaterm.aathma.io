@@ -488,6 +488,16 @@ a {
   margin-top: 2px;
 }
 
+.btn-secondary-download {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.btn-secondary-download:hover {
+  background: rgba(249, 196, 64, 0.1);
+}
+
 .btn-secondary {
   display: inline-flex;
   align-items: center;
@@ -1150,6 +1160,160 @@ a {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* ── macOS Modal ── */
+
+.macos-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn 0.2s ease;
+}
+
+.macos-modal[hidden] {
+  display: none;
+}
+
+.macos-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.macos-modal-content {
+  position: relative;
+  background: var(--surface, #1a1a1a);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 460px;
+  width: 90%;
+  text-align: center;
+}
+
+.macos-modal-icon {
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.macos-modal-content h3 {
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+
+.macos-modal-content p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+  line-height: 1.6;
+}
+
+.macos-modal-code {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 16px 0;
+}
+
+.macos-modal-code code {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  text-align: left;
+  user-select: all;
+}
+
+.macos-modal-copy {
+  background: rgba(249, 196, 64, 0.15);
+  border: 1px solid rgba(249, 196, 64, 0.3);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.macos-modal-copy:hover {
+  background: rgba(249, 196, 64, 0.25);
+}
+
+.macos-modal-close {
+  background: var(--accent);
+  color: #0a0a0a;
+  border: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 10px 32px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  margin-top: 8px;
+  transition: opacity 0.2s;
+}
+
+.macos-modal-close:hover {
+  opacity: 0.85;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.macos-info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(249, 196, 64, 0.3);
+  color: var(--accent);
+  transition: background 0.2s, border-color 0.2s;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.macos-info-icon:hover {
+  background: rgba(249, 196, 64, 0.1);
+  border-color: var(--accent);
+}
+
+.macos-notice {
+  margin-top: 24px;
+  padding: 16px 20px;
+  border: 1px solid rgba(249, 196, 64, 0.2);
+  border-radius: var(--radius);
+  background: rgba(249, 196, 64, 0.04);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.macos-notice p {
+  margin: 0 0 8px;
+}
+
+.macos-notice code {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  user-select: all;
 }
 
 /* ── CTA ── */
